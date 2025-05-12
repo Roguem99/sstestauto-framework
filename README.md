@@ -7,7 +7,7 @@ Provide an initial Test Plan utilizing Gherkin in order to define communication 
 ### Tools
 | Tool | Version |
 | ------------- | ------------- |
-| Nodejs | 27 |
+| Nodejs | 22 |
 | Playwright | latest |
 | Cucumber | latest |
 
