@@ -30,6 +30,11 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    extraHTTPHeaders: {
+      'Accept': 'application/graphql-response+json, application/graphql+json, application/json, text/event-stream, multipart/mixed',
+      'Authorization': `token ${process.env.API_TOKEN}`,
+    },
+
   },
 
   /* Configure projects for major browsers */
