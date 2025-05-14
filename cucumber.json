@@ -12,11 +12,11 @@
         "format": [
             [
                 "html",
-                "cucumber-report.html"
+                "test-results/cucumber-report.html"
             ],
             "summary",
             "progress-bar",
-            "json:./cucumber-report.json"
+            "json:./test-results/cucumber-report.json"
         ]
     }
 }

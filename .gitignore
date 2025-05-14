@@ -8,3 +8,7 @@ node_modules/
 
 # Dev Files
 .env
+
+# Report Files
+# *-report.html
+# *-report.json
