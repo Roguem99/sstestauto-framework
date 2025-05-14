@@ -1,0 +1,25 @@
+{
+  "name": "sstestauto-framework",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Seth Tarrants - seth.tarrants@gmail.com",
+  "scripts": {
+    "test": "cucumber-js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Roguem99/sstestauto-framework.git"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Roguem99/sstestauto-framework/issues"
+  },
+  "homepage": "https://github.com/Roguem99/sstestauto-framework#readme",
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.2.0",
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.15.17",
+    "dotenv": "^16.5.0"
+  }
+}
