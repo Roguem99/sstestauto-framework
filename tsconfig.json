@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@myhelper/*": ["packages/myhelper/*"] // This mapping is relative to "baseUrl".
+    }
+  },
+  "exclude": ["node_modules", "server.ts", "playwright.config.ts", "playwright-tests-folder"],
+}

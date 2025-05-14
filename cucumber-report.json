@@ -1,0 +1,183 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "creating-users;admin-is-able-to-create-a-user-with-unique-email",
+        "keyword": "Scenario Outline",
+        "line": 21,
+        "name": "Admin is able to create a user with unique email",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 427448999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 5,
+            "name": "the Admin has authenticated",
+            "match": {
+              "location": "file:\\C:\\Source\\snippet-sentry-exercise\\sstestauto-framework\\features\\step_definitions\\stepdefs.ts:21"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3557476899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 6,
+            "name": "the Admin is on the Manage Users page",
+            "match": {
+              "location": "file:\\C:\\Source\\snippet-sentry-exercise\\sstestauto-framework\\features\\step_definitions\\stepdefs.ts:30"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1461063600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "the Admin clicks the Add User button",
+            "match": {
+              "location": "file:\\C:\\Source\\snippet-sentry-exercise\\sstestauto-framework\\features\\step_definitions\\stepdefs.ts:35"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 104054299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 10,
+            "name": "the Admin types \"English\" into the first name field",
+            "match": {
+              "location": "file:\\C:\\Source\\snippet-sentry-exercise\\sstestauto-framework\\features\\step_definitions\\stepdefs.ts:39"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 17863800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 11,
+            "name": "the Admin types \"Smithers\" into the last name field",
+            "match": {
+              "location": "file:\\C:\\Source\\snippet-sentry-exercise\\sstestauto-framework\\features\\step_definitions\\stepdefs.ts:43"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 28646700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 12,
+            "name": "the Admin types \"seth.tarrants+ssenglish@gmail.com\" into the email field",
+            "match": {
+              "location": "file:\\C:\\Source\\snippet-sentry-exercise\\sstestauto-framework\\features\\step_definitions\\stepdefs.ts:47"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 70372099
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 13,
+            "name": "the Admin types \"9194573589\" into the mobile number field",
+            "match": {
+              "location": "file:\\C:\\Source\\snippet-sentry-exercise\\sstestauto-framework\\features\\step_definitions\\stepdefs.ts:51"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 25657900
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 14,
+            "name": "the Admin clicks the Add User Save button",
+            "match": {
+              "location": "file:\\C:\\Source\\snippet-sentry-exercise\\sstestauto-framework\\features\\step_definitions\\stepdefs.ts:55"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 339749200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 15,
+            "name": "the Manage User page displays the user \"English\" \"Smithers\" \"seth.tarrants+ssenglish@gmail.com\"",
+            "match": {
+              "location": "file:\\C:\\Source\\snippet-sentry-exercise\\sstestauto-framework\\features\\step_definitions\\stepdefs.ts:59"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 18161000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 16,
+            "name": "the user \"English\" \"Smithers\" shows with the correct \"9194573589\"",
+            "match": {
+              "location": "file:\\C:\\Source\\snippet-sentry-exercise\\sstestauto-framework\\features\\step_definitions\\stepdefs.ts:70"
+            },
+            "result": {
+              "status": "pending",
+              "duration": 397899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 17,
+            "name": "the user \"English\" \"Smithers\" shows as \"Invited\"",
+            "match": {
+              "location": "file:\\C:\\Source\\snippet-sentry-exercise\\sstestauto-framework\\features\\step_definitions\\stepdefs.ts:75"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 292342499
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "creating-users",
+    "line": 2,
+    "keyword": "Feature",
+    "name": "Creating Users",
+    "tags": [],
+    "uri": "features\\feature-1.feature"
+  }
+]
