@@ -4,7 +4,7 @@
   "description": "",
   "author": "Seth Tarrants - seth.tarrants@gmail.com",
   "scripts": {
-    "test": "cucumber-js"
+    "test": "cucumber-js --config config/cucumber.cjs"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,10 @@
   "devDependencies": {
     "@cucumber/cucumber": "^11.2.0",
     "@playwright/test": "^1.52.0",
-    "@types/node": "^22.15.17",
-    "dotenv": "^16.5.0"
+    "@types/node": "^22.15.18",
+    "dotenv": "^16.5.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
   }
 }

@@ -1,9 +1,16 @@
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@myhelper/*": ["packages/myhelper/*"] // This mapping is relative to "baseUrl".
-    }
-  },
-  "exclude": ["node_modules", "server.ts", "playwright.config.ts", "playwright-tests-folder"],
+    "compilerOptions": {
+        "target": "ES2020",
+        "module": "CommonJS",
+        "strict": true,
+        "esModuleInterop": true,
+        "outDir": "dist"
+    },
+    "noImplicitAny": false,
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }

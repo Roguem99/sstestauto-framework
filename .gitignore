@@ -8,6 +8,7 @@ node_modules/
 
 # Dev Files
 .env
+/tests-out
 
 # Report Files
 *-report.html
