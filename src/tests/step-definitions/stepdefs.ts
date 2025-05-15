@@ -3,6 +3,7 @@ import { Browser, chromium, expect, Page } from '@playwright/test';
 import { SSManageUsersPage } from '../pages/ss-manageusers-page';
 import { SSLoginPage } from '../pages/ss-login-page';
 import 'dotenv/config'
+import { SSUserComponent } from '../pages/user-component';
 
 setDefaultTimeout(30 * 1000);
 
@@ -36,32 +37,44 @@ Given('the Admin is on the Manage Users page', async () => {
 });
 
 Given('the Admin clicks the Add User button', async () => {
-    await page.getByText('Add User').click();
+    const manageUsersPage = new SSManageUsersPage(page);
+    const userComponent = new SSUserComponent(page);
+
+    await manageUsersPage.clickAddUser();
+    userComponent.closeUserComponentWindow.waitFor();
 });
 
 Given('the Admin types {string} into the first name field', async (firstName) => {
-    await page.locator('#textfield-adduser-firstname').fill(firstName);
+    const userComponent = new SSUserComponent(page);
+    userComponent.enterUsersFirstName(firstName);
 });
 
 Given('the Admin types {string} into the last name field', async (lastName) => {
-    await page.locator('#textfield-adduser-lastname').fill(lastName);
+    const userComponent = new SSUserComponent(page);
+    userComponent.enterUsersLastName(lastName);
 });
 
 Given('the Admin types {string} into the email field', async (email) => {
-    await page.locator('#textfield-adduser-email').fill(email);
+    const userComponent = new SSUserComponent(page);
+    userComponent.enterUsersEmailAddress(email);
 });
 
 Given('the Admin selects the {string} number code {string} from dropdown', async (country, countryCode) => {
-    await selectCountryCodeOnProfile(country);
+    const userComponent = new SSUserComponent(page);
+    userComponent.selectCountryCodeOnProfile(country);
 });
 
 Given('the Admin types {string} into the mobile number field', async (mobileNumber) => {
-    await enterUserMobileNumberOnProfile(mobileNumber);
+    const userComponent = new SSUserComponent(page);
+    userComponent.enterUserMobileNumberOnProfile(mobileNumber);
 });
 
 When('the Admin clicks the Add User Save button', async () => {
-    await page.getByTestId('save-user').click();
+    const userComponent = new SSUserComponent(page);
+    userComponent.clickSaveButton();
 });
+
+
 
 // Then('the Manage Users page displays the user details {string} {string} {string}', async (first, last, email) => {
 //     await page.getByText(`${first} ${last}`).waitFor();
@@ -152,138 +165,3 @@ When('the Admin clicks the Add User Save button', async () => {
 // });
 
 
-// // SUPPORTING FUNCTIONS
-
-// /**
-//  * Waits for the toast message to appear and then returns 
-//  * the text within the toast message.
-//  * 
-//  * @returns {string} Text content from toast message.
-//  */
-// async function getToastContent() {
-//     await page.getByTestId('toast-content').waitFor();
-//     return await page.getByTestId('toast-content').textContent();
-// };
-
-// /**
-//  * Waits for the toast message to appear and then closes it.
-//  * 
-//  * note: Due to the dynamic nature of the data-testid, it requires
-//  * using regex to locate the element.
-//  * 
-//  */
-// async function closeToastAlert() {
-//     await page.getByTestId(/.*toast-item.*/).waitFor();
-//     await page.getByTestId(/.*toast-item.*/).getByRole('button').click();
-// };
-
-
-// /**
-//  * Clears white space from the start and end of a string
-//  * for more reader friendly scenario steps and validation.
-//  * 
-//  * @param text - Text with white spaces at front and end of text 
-//  * @returns {string} Text with no whitespace at beginning or end of string
-//  */
-// function trimWhiteSpaceFromText(text) {
-//     return text.trim();
-// };
-
-// /**
-//  * Clicks the "Add User" button to open the User Profile component.
-//  */
-// async function clickAddUserButton() {
-//     await page.getByText('Add User').click();
-// };
-
-// /**
-//  * Fills in text within the "First Name" input field within
-//  * the User Profile component.
-//  * 
-//  * @param firstName {string} First name of user
-//  */
-// async function enterFirstNameOnProfile(firstName) {
-//     await page.locator('#textfield-adduser-firstname').fill(firstName);
-// };
-
-// /**
-//  * Fills in text within the "Last Name" input field within
-//  * the User Profile component.
-//  * 
-//  * @param lastName - {string} Last name of user
-//  */
-// async function enterLastNameOnProfile(lastName) {
-//     await page.locator('#textfield-adduser-lastname').fill(lastName);
-// };
-
-// /**
-//  * Fills in text within the "Email Address" input field within
-//  * the User Profile component.
-//  * 
-//  * @param emailAddress {string} Email address of user. Must be unique.
-//  */
-// async function enterUserEmailOnProfile(emailAddress) {
-//     await page.locator('#textfield-adduser-email').fill(emailAddress);
-// };
-
-// /**
-//  * Filters and selects the country for the mobile phone number input field.
-//  * 
-//  * @param country {string} Name of Country for mobile number Country Code selection
-//  */
-// async function selectCountryCodeOnProfile(country) {
-//     await page.locator('#input-adduser-phone').getByRole('button').click();
-//     await page.getByRole('listbox').waitFor();
-//     await page.getByPlaceholder('Search by country name or code').fill(country);
-//     await page.getByText(country).waitFor();
-//     await page.getByRole('option').getByText(country).click();
-// };
-
-// /**
-//  * Fills in the mobile phone number on the User Profile component.
-//  * 
-//  * @param phoneNumber {string}
-//  */
-// async function enterUserMobileNumberOnProfile(phoneNumber) {
-//     await page.getByPlaceholder('Enter Mobile Number').fill(phoneNumber);
-// };
-
-// /**
-//  * Clicks the Save button for the User Profile component and verifies
-//  * the correct 'User added successfully' message displays.
-//  */
-// async function saveUserProfileSuccessfully() {
-//     await page.getByTestId('save-user').click();
-//     let toastMsgText = await getToastContent();
-//     expect(toastMsgText).toBe('User added successfully');
-//     await expect(await page.getByTestId('toast-content')).toBeHidden({timeout: 10000});
-// };
-
-// /**
-//  * Clicks on the Users Name to open the Modify User component.
-//  * 
-//  * @param first {string} First name of user to edit
-//  * @param last {string} Last name of user to edit
-//  */
-// async function editUserProfile(first, last) {
-//     await page.getByText(`${first} ${last}`).waitFor();
-//     await page.getByText(`${first} ${last}`).click();
-//     await page.getByText('Modify User').waitFor();
-// };
-
-
-
-
-// Get test users api call and return array of ids
-
-
-// Delete test users api call
-// async function apiDeleteTestUsers(userId) {
-//     const apiRequestContext: APIRequestContext = await request.newContext();
-//     const deleteUser = await apiRequestContext.post(`https://beta.snippetsentry.com/graphql`, {
-//     data: {
-//       body: `{"operationName":"AuthzUpdateUser","query":"mutation AuthzUpdateUser($query: AuthzUpdateUserQuery!) {AuthzUpdateUser(query: $query) {id locale __typename}}","variables":{"query":{"id":"${userId}","status":"deleted"}}}`
-//     }
-//   });
-//   expect(deleteUser.ok()).toBeTruthy();
-// }
