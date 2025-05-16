@@ -1,26 +1,52 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { BasePage } from './base-page';
 
+type User = {
+    name: string;
+    status: string;
+    email: string;
+    mobileNum: string;
+}
+
 export class SSManageUsersPage extends BasePage {
     readonly url="https://beta.snippetsentry.com/app/client/users";
 
     addUserButton = this.page.getByText('Add User');
     navOptionManageUsers = this.page.getByTestId('nav-manageusers');
-    usersListHeader = this.page.getByText('Users List');
+    usersListTitle = this.page.getByText('Users List');
+    usersTableHeaderRow = this.page.locator('#virtualTable tr');
+    usersTableColumnHeaderCheckbox = this.usersTableHeaderRow.locator('th:nth-child(1)');
+    usersTableColumnHeaderName = this.usersTableHeaderRow.locator('th:nth-child(3)');
+    usersTableColumnHeaderStatus = this.usersTableHeaderRow.locator('th:nth-child(4)');
+    usersTableColumnHeaderEmail = this.usersTableHeaderRow.locator('th:nth-child(5)');
+    usersTableColumnHeaderPhone = this.usersTableHeaderRow.locator('th:nth-child(6)');
+    usersTableColumnHeaderAndroid = this.usersTableHeaderRow.locator('th:nth-child(7)');
+    usersTableColumnHeaderWhatsApp = this.usersTableHeaderRow.locator('th:nth-child(8)');
+    usersTableColumnHeaderiMessage = this.usersTableHeaderRow.locator('th:nth-child(9)');
+    usersTableFirstRow = this.page.locator('#virtualTable tbody tr:nth-child(2)');
+    usersTableColumnFirstRowCheckbox = this.usersTableFirstRow.locator('td:nth-child(1)');
+    usersTableColumnFirstRowAdminIcon = this.usersTableFirstRow.locator('td:nth-child(2)');
+    usersTableColumnFirstRowName = this.usersTableFirstRow.locator('td:nth-child(3)');
+    usersTableColumnFirstRowStatus = this.usersTableFirstRow.locator('td:nth-child(4)');
+    usersTableColumnFirstRowEmail = this.usersTableFirstRow.locator('td:nth-child(5)');
+    usersTableColumnFirstRowPhone = this.usersTableFirstRow.locator('td:nth-child(6)');
+    usersTableColumnFirstRowAndroid = this.usersTableFirstRow.locator('td:nth-child(7)');
+    usersTableColumnFirstRowWhatsApp = this.usersTableFirstRow.locator('td:nth-child(8)');
+    usersTableColumnFirstRowiMessage = this.usersTableFirstRow.locator('td:nth-child(9)');
+    usersTableToastAlert = this.page.getByTestId('toast-content');
+    saveUserButton = this.page.getByTestId('save-user');
     
     async goto() {
         await this.page.goto(this.url);
     };
 
     async verifyUserListTableDisplays() {
-        await this.usersListHeader.waitFor();
+        await this.usersListTitle.waitFor();
     };
 
     async clickAddUser(){
         await this.addUserButton.click();
     };
-
-    // SUPPORTING FUNCTIONS MANAGE USERS PAGE
 
     /**
      * Waits for the toast message to appear and then returns 
@@ -28,9 +54,10 @@ export class SSManageUsersPage extends BasePage {
      * 
      * @returns {string} Text content from toast message.
      */
-    async getToastContent() {
+    async getToastContent(): Promise<null | string> {
         await this.page.getByTestId('toast-content').waitFor();
-        return await this.page.getByTestId('toast-content').textContent();
+        let toast = await this.usersTableToastAlert.textContent();
+        return toast
     };
 
     /**
@@ -68,9 +95,39 @@ export class SSManageUsersPage extends BasePage {
         await this.page.getByText('Modify User').waitFor();
     };
 
+    async getFirstRowUserDetails(): Promise<User> {
+        let firstRowName = await this.usersTableColumnFirstRowName.textContent();
+        let firstRowStatus = await this.usersTableColumnFirstRowStatus.textContent();
+        let firstRowEmail = await this.usersTableColumnFirstRowEmail.textContent();
+        let firstRowPhoneNumber = await this.usersTableColumnFirstRowPhone.textContent();
+        const user: User = {
+            name: firstRowName!,
+            status: firstRowStatus!,
+            email: firstRowEmail!,
+            mobileNum: firstRowPhoneNumber!,
+        }
+        return user
+    };
 
+    async removePhoneSpacesDashesParens(number: string) {
+        return number.replace(/[-\]) [(]/g, '');
+    }
 
+    async waitForUserToDisplayOnTable(firstname: string, lastName: string): Promise<void> {
+        await this.page.getByText(`${firstname} ${lastName}`).waitFor();
+    }
 
+    /**
+     * Clicks the Save button for the User Profile component and verifies
+     * the correct 'User added successfully' message displays.
+     */
+    async saveUserProfileSuccessfully() {
+        await this.saveUserButton.click();
+        let toastMsgText = await this.getToastContent();
+        expect(toastMsgText).toBe('User added successfully');
+        await expect(this.page.getByTestId('toast-content')).toBeHidden({timeout: 10000});
+    };
+    
     // Get test users api call and return array of ids
 
 

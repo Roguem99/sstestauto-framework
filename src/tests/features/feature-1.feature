@@ -22,22 +22,22 @@ Scenario Outline: Admin is able to create a user with unique email
 Examples:
   | firstname | lastname | email | country | countryCode | phonenumber |
   | English | Smithers | seth.tarrants+ssenglish@gmail.com | United States | +1 | (714) 781-4636 |
-  # | French | Feline | seth.tarrants+ssfrench@gmail.com | France | +33 | 825 30 05 00 |
+  | French | Feline | seth.tarrants+ssfrench@gmail.com | France | +33 | 825 30 05 00 |
 
-# Scenario: Admin is able to invite a user
-#   Given the Admin adds a new user with "Tobe" "Nottobe" "seth.tarrants+ssthequestion@gmail.com"
-#     And the Manage Users page displays "Tobe" "Nottobe" status as "Pending" 
-#   When the Admin opens the user profile for "Tobe" "Nottobe"
-#     And the Admin selects the "Send Email Invite" profile option
-#   Then a successful "Invitation sent" toast message displays
-#     And the Manage Users page displays "Tobe" "Nottobe" status as "Invited"
+Scenario: Admin is able to invite a user
+  Given the Admin adds a new user with "Tobe" "Nottobe" "seth.tarrants+ssthequestion@gmail.com"
+    And the Manage Users page displays "Tobe" "Nottobe" status as "Pending" 
+  When the Admin opens the user profile for "Tobe" "Nottobe"
+    And the Admin selects the "Send Email Invite" profile option
+  Then a successful "Invitation sent" toast message displays
+    And the Manage Users page displays "Tobe" "Nottobe" status as "Invited"
 
-# Scenario: New users require unique email address
-#   Given the Admin adds a new user with "Thefirst" "Juan" "seth.tarrants+first@gmail.com"
-#   When the Admin adds a new user with the same email address "seth.tarrants+first@gmail.com"
-#   Then an "Email is already in use" error toast message displays
-#     And the Add User component is still visible
-#     And the Admin closes the Add User component
+Scenario: New users require unique email address
+  Given the Admin adds a new user with "Thefirst" "Juan" "seth.tarrants+first@gmail.com"
+  When the Admin adds a new user with the same email address "seth.tarrants+first@gmail.com"
+  Then an "Email is already in use" error toast message displays
+    And the Add User component is still visible
+    And the Admin closes the Add User component
 
 # Scenario: Admin is able to disable an active nonAdmin user
 #   Given the Admin adds a new user with "Zem" "Zorg" "seth.tarrants+zemzorg@gmail.com"

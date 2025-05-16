@@ -9,7 +9,7 @@ export class SSUserComponent extends BasePage {
     userFirstNameInput = this.page.locator('#textfield-adduser-firstname');
     userLastNameInput = this.page.locator('#textfield-adduser-lastname');
     userEmailInput = this.page.locator('#textfield-adduser-email');
-    saveUserEditsButton = this.page.getByTestId('save-user');
+    saveUserButton = this.page.getByTestId('save-user');
     cancelUserEditsButton = this.page.getByTestId('save-user');
     closeUserComponentWindow = this.page.locator('#btn-closeAddUser');
     
@@ -30,8 +30,8 @@ export class SSUserComponent extends BasePage {
         await this.userFirstNameInput.fill(first);
         await this.userLastNameInput.fill(last);
         await this.userEmailInput.fill(email);
-        await this.saveUserEditsButton.click();
-        await this.saveUserEditsButton.waitFor({state: 'hidden'})
+        await this.saveUserButton.click();
+        await this.saveUserButton.waitFor({state: 'hidden'})
     };
 
     /**
@@ -57,17 +57,8 @@ export class SSUserComponent extends BasePage {
     };
 
     async clickSaveButton() {
-        await this.saveUserEditsButton.click();
+        await this.saveUserButton.click();
     };
 
-    //  /**
-    //  * Clicks the Save button for the User Profile component and verifies
-    //  * the correct 'User added successfully' message displays.
-    //  */
-    // async saveUserProfileSuccessfully() {
-    //     await this.page.getByTestId('save-user').click();
-    //     let toastMsgText = await this.getToastContent();
-    //     expect(toastMsgText).toBe('User added successfully');
-    //     await expect(await this.page.getByTestId('toast-content')).toBeHidden({timeout: 10000});
-    // };
+
 };

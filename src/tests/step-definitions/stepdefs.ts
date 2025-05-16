@@ -41,84 +41,101 @@ Given('the Admin clicks the Add User button', async () => {
     const userComponent = new SSUserComponent(page);
 
     await manageUsersPage.clickAddUser();
-    userComponent.closeUserComponentWindow.waitFor();
+    await userComponent.closeUserComponentWindow.waitFor();
 });
 
 Given('the Admin types {string} into the first name field', async (firstName) => {
     const userComponent = new SSUserComponent(page);
-    userComponent.enterUsersFirstName(firstName);
+    await userComponent.enterUsersFirstName(firstName);
 });
 
 Given('the Admin types {string} into the last name field', async (lastName) => {
     const userComponent = new SSUserComponent(page);
-    userComponent.enterUsersLastName(lastName);
+    await userComponent.enterUsersLastName(lastName);
 });
 
 Given('the Admin types {string} into the email field', async (email) => {
     const userComponent = new SSUserComponent(page);
-    userComponent.enterUsersEmailAddress(email);
+    await userComponent.enterUsersEmailAddress(email);
 });
 
 Given('the Admin selects the {string} number code {string} from dropdown', async (country, countryCode) => {
     const userComponent = new SSUserComponent(page);
-    userComponent.selectCountryCodeOnProfile(country);
+    await userComponent.selectCountryCodeOnProfile(country);
 });
 
 Given('the Admin types {string} into the mobile number field', async (mobileNumber) => {
     const userComponent = new SSUserComponent(page);
-    userComponent.enterUserMobileNumberOnProfile(mobileNumber);
+    await userComponent.enterUserMobileNumberOnProfile(mobileNumber);
 });
 
 When('the Admin clicks the Add User Save button', async () => {
     const userComponent = new SSUserComponent(page);
-    userComponent.clickSaveButton();
+    await userComponent.clickSaveButton();
 });
 
+Then('the Manage Users page displays the user details {string} {string} {string}', async (first, last, email) => {
+    const manageUsersPage = new SSManageUsersPage(page);
 
+    await manageUsersPage.waitForUserToDisplayOnTable(first, last);
+    let user = await manageUsersPage.getFirstRowUserDetails();
 
-// Then('the Manage Users page displays the user details {string} {string} {string}', async (first, last, email) => {
-//     await page.getByText(`${first} ${last}`).waitFor();
-//     let firstRowName = await page.locator('#virtualTable tbody tr:nth-child(2) td:nth-child(3)').textContent();
-//     let firstRowEmail = await page.locator('#virtualTable tbody tr:nth-child(2) td:nth-child(5)').textContent();
-//     expect(firstRowName).toBe(`${first} ${last}`);
-//     expect(firstRowEmail).toBe(email);
-// });
+    expect(user.name).toBe(`${first} ${last}`);
+    expect(user.email).toBe(email);
+});
 
-// Then('the user {string} {string} shows with the correct {string} {string}', async (first, last, countryCode, phoneNumber) => {
-//     await page.getByText(`${first} ${last}`).waitFor();
-//     let firstRowName = await page.locator('#virtualTable tbody tr:nth-child(2) td:nth-child(3)').textContent();
-//     let firstRowPhoneNumber = await page.locator('#virtualTable tbody tr:nth-child(2) td:nth-child(6)').textContent();
-//     let cleanPhoneNumber = await phoneNumber.replace(/[-\]) [(]/g, '');
-//     expect(firstRowName).toBe(`${first} ${last}`);
-//     expect(firstRowPhoneNumber).toBe(`${countryCode}${cleanPhoneNumber}`);
-// });
+Then('the user {string} {string} shows with the correct {string} {string}', async (first, last, countryCode, phoneNumber) => {
+    const manageUsersPage = new SSManageUsersPage(page);
 
-// Then('the user {string} {string} shows status as {string}', async (first, last, status) => {
-//     await page.getByText(`${first} ${last}`).waitFor();
-//     let firstRowName = await page.locator('#virtualTable tbody tr:nth-child(2) td:nth-child(3)').textContent();
-//     let firstRowStatus = await page.locator('#virtualTable tbody tr:nth-child(2) td:nth-child(4)').textContent();
-//     let trimmedStatusText = trimWhiteSpaceFromText(firstRowStatus);
-//     expect(firstRowName).toBe(`${first} ${last}`);
-//     expect(trimmedStatusText).toBe(status);
-// });
+    await manageUsersPage.waitForUserToDisplayOnTable(first, last);
+    let cleanPhoneNumber = await manageUsersPage.removePhoneSpacesDashesParens(phoneNumber);
+    let user = await manageUsersPage.getFirstRowUserDetails();
 
-// When('the Admin sees the {string} toast message', async (message) => {
-//     let toastMsgText = await getToastContent();
-//     expect(toastMsgText).toBe(message);
-// });
+    expect(user.name).toBe(`${first} ${last}`);
+    expect(user.mobileNum).toBe(`${countryCode}${cleanPhoneNumber}`);
+});
 
-// When('does not see the {string} toast message', async (message) => {
-//     let toastMsgText = await getToastContent();
-//     expect(toastMsgText).not.toBe(message);
-// });
+Then('the user {string} {string} shows status as {string}', async (first, last, status) => {
+    const manageUsersPage = new SSManageUsersPage(page);
 
-// Given('the Admin adds a new user with {string} {string} {string}', async (first, last, email) => {
-//     await clickAddUserButton();
-//     await enterFirstNameOnProfile(first);
-//     await enterLastNameOnProfile(last);
-//     await enterUserEmailOnProfile(email);
-//     await saveUserProfileSuccessfully();    
-// });
+    await manageUsersPage.waitForUserToDisplayOnTable(first, last);
+    let user = await manageUsersPage.getFirstRowUserDetails();
+    let trimmedStatusText = manageUsersPage.trimWhiteSpaceFromText(user.status);
+
+    expect(user.name).toBe(`${first} ${last}`);
+    expect(trimmedStatusText).toBe(status);
+});
+
+When('the Admin sees the {string} toast message', async (message) => {
+    const manageUsersPage = new SSManageUsersPage(page);
+
+    let toastMsgText = await manageUsersPage.getToastContent()
+    expect(toastMsgText).toBe(message);
+});
+
+When('does not see the {string} toast message', async (message) => {
+    const manageUsersPage = new SSManageUsersPage(page);
+
+    let toastMsgText = await manageUsersPage.getToastContent()
+    expect(toastMsgText).not.toBe(message);
+});
+
+Given('the Admin adds a new user with {string} {string} {string}', async (first, last, email) => {
+    const manageUsersPage = new SSManageUsersPage(page);
+    const userComponent = new SSUserComponent(page);
+
+    await manageUsersPage.clickAddUser();
+    await userComponent.enterUsersFirstName(first);
+    await userComponent.enterUsersLastName(last);
+    await userComponent.enterUsersEmailAddress(email);
+    await userComponent.clickSaveButton();
+
+    // await clickAddUserButton();
+    // await enterFirstNameOnProfile(first);
+    // await enterLastNameOnProfile(last);
+    // await enterUserEmailOnProfile(email);
+    await manageUsersPage.saveUserProfileSuccessfully();
+});
 
 // Given('the Manage Users page displays {string} {string} status as {string}', async (first, last, status) => {
 //     await page.getByText(`${first} ${last}`).waitFor();
